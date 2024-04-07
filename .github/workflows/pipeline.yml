@@ -2,9 +2,9 @@ name: APP CD
 
 on:
   push:
-    branches: [ "qa" ]
+    branches: [ "main", "staging", "qa" ]
   pull_request:
-    branches: [ "main", "staging" ]
+    branches: [ "main", "staging", "qa" ]
 
 jobs:
   
