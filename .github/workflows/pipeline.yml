@@ -1,18 +1,40 @@
-name: STAGE CD
+name: APP CD
 
 on:
-  push:
-    branches: [ "staging" ]
   pull_request:
-    branches: [ "staging" ]
+    branches: [ "main" ]
 
 jobs:
+  
   deploy-to-prod:
 
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to staging machine
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_PROD_TOKEN }}
+          api-key: ${{ secrets.RENDER_KEY }}
+
+  deploy-to-stage:
+
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/staging'
     steps:
       - name: Deploy to staging machine
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
           service-id: ${{ secrets.RENDER_STAGE_TOKEN }}
+          api-key: ${{ secrets.RENDER_KEY }}
+
+  deploy-to-qa:
+
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/qa'
+    steps:
+      - name: Deploy to staging machine
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_QA_TOKEN }}
           api-key: ${{ secrets.RENDER_KEY }}
