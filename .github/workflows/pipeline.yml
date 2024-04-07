@@ -1,18 +1,18 @@
-name: PROD CD
+name: STAGE CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "staging" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "staging" ]
 
 jobs:
   deploy-to-prod:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to production
+      - name: Deploy to staging machine
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          service-id: ${{ secrets.RENDER_PROD_TOKEN }}
+          service-id: ${{ secrets.RENDER_STAGE_TOKEN }}
           api-key: ${{ secrets.RENDER_KEY }}
